@@ -1,4 +1,4 @@
-FROM alpine:3.6
+FROM alpine:3.5
 
 LABEL maintainer="estafette.io" \
       description="The nginx-sidecar runs next to estafette-ci-api to handle TLS offloading"
