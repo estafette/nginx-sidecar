@@ -16,9 +16,7 @@ pipelines:
   bake:
     image: docker:17.06.1-ce
     commands:
-    - cp Dockerfile ./publish
-    - cp /etc/ssl/certs/ca-certificates.crt ./publish
-    - docker build -t estafette/${ESTAFETTE_LABEL_APP}:${ESTAFETTE_GIT_BRANCH} ./publish
+    - docker build -t estafette/${ESTAFETTE_LABEL_APP}:${ESTAFETTE_GIT_BRANCH} .
 
   push-to-docker-hub:
     image: docker:17.06.1-ce
@@ -29,9 +27,7 @@ pipelines:
     - docker login --username=${DOCKER_HUB_USERNAME} --password="${DOCKER_HUB_PASSWORD}"
     - docker push estafette/${ESTAFETTE_LABEL_APP}:${ESTAFETTE_GIT_BRANCH}
     when:
-      status == 'succeeded' &&
-      branch == 'master' &&
-      server == 'gocd'
+      status == 'succeeded'
 
   set-build-status:
     image: extensions/github-status:dev
